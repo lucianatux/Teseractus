@@ -1,6 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,8 +28,14 @@ const analytics = getAnalytics(app);
 const db = getFirestore();
 
 export const saveSale = (fecha, nombre, monto, tipoVenta) => {
-    console.log(fecha, nombre, monto, tipoVenta);
-    addDoc(collection(db, 'ventas'), { fecha, nombre, monto, tipoVenta });
+  console.log(fecha, nombre, monto, tipoVenta);
+  addDoc(collection(db, "ventas"), { fecha, nombre, monto, tipoVenta });
 };
 
-export const getSales = () => console.log('sales list');
+
+export const getSales = async () => {
+    console.log("sales list");
+    const querySnapshot = await getDocs(collection(db, 'ventas'));
+    return querySnapshot;
+};
+

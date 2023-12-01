@@ -1,10 +1,26 @@
 import { saveSale, getSales } from "./firebase.js";
 
-window.addEventListener('DOMContentLoaded', ()=>{
-    getSales();
-});
-
+const salesContainer = document.getElementById("salesContainer");
 const saleForm = document.getElementById('saleForm');
+
+
+window.addEventListener('DOMContentLoaded', async () => {
+    const querySnapshot = await getSales();
+
+    let html= '';
+
+    querySnapshot.forEach(doc => {
+        html += `
+        <div>
+            <h5>${doc.data().clientName}</h5>
+        </div>
+        `
+
+        console.log(doc.data());
+        console.log(salesContainer);
+    })
+    salesContainer.innerHTML = '';
+});
 
 saleForm.addEventListener('submit', (e)=>{
     e.preventDefault();
