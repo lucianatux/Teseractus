@@ -5,6 +5,9 @@ import {
   collection,
   addDoc,
   getDocs,
+  deleteDoc,
+  onSnapshot,
+  doc,
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -38,4 +41,12 @@ export const getSales = async () => {
     const querySnapshot = await getDocs(collection(db, 'ventas'));
     return querySnapshot;
 };
+
+export const onGetSales = (callback) => {
+    onSnapshot(collection(db, 'ventas'), callback);
+};
+
+export const deleteSale = id => {
+    deleteDoc(doc(db, 'ventas', id));
+}
 

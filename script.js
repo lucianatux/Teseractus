@@ -1,57 +1,54 @@
-import { saveSale, getSales } from "./firebase.js";
+import { saveSale, getSales, onGetSales, deleteSale } from "./firebase.js";
 
 const salesContainer = document.getElementById("salesContainer");
-const saleForm = document.getElementById('saleForm');
+const saleForm = document.getElementById("saleForm");
 
+window.addEventListener("DOMContentLoaded", async () => {
+  onGetSales((querySnapshot) => {
+    let html = "";
 
-window.addEventListener('DOMContentLoaded', async () => {
-    const querySnapshot = await getSales();
-
-    let html= '';
-
-    querySnapshot.forEach(doc => {
-        html += `
+    querySnapshot.forEach((doc) => {
+      const sale = doc.data();
+      html += `
         <div>
-            <h5>${doc.data().clientName}</h5>
+            <p>${sale.fecha}</p>
+            <p>${sale.nombre}</p>
+            <p>${sale.monto}</p>
+            <p>${sale.tipoVenta}</p>
+            <button class="btn-delete" data-id="${doc.id}"  >Delete</button>
         </div>
-        `
-
-        console.log(doc.data());
-        console.log(salesContainer);
+        `;
+      console.log(sale);
+    });
+    salesContainer.innerHTML = html;
+    const btnsDelete = salesContainer.querySelectorAll('.btn-delete');
+    btnsDelete.forEach(btn =>{
+        btn.addEventListener("click", (event) =>{
+            deleteSale(event.target.dataset.id);
+            console.log(event.target.dataset.id);
+        })
     })
-    salesContainer.innerHTML = '';
+  });
 });
 
-saleForm.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    console.log('enviado');
-    const saleDate = saleForm['saleDate'];
-    const clientName = saleForm['clientName']; 
-    const saleAmount = saleForm['saleAmount'];
-    const typeSale = saleForm['typeSale'];
+saleForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log("enviado");
+  const saleDate = saleForm["saleDate"];
+  const clientName = saleForm["clientName"];
+  const saleAmount = saleForm["saleAmount"];
+  const typeSale = saleForm["typeSale"];
 
-    console.log(saleDate.value, clientName.value, saleAmount.value, typeSale.value);
+  console.log(
+    saleDate.value,
+    clientName.value,
+    saleAmount.value,
+    typeSale.value
+  );
 
-   saveSale(saleDate.value, clientName.value, saleAmount.value, typeSale.value);
-   saleForm.reset();
+  saveSale(saleDate.value, clientName.value, saleAmount.value, typeSale.value);
+  saleForm.reset();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 var firebaseConfig = {
