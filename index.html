@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Teseractus</title>
     <link rel="shortcut icon" href="teseractusIcon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+
+
   </head>
   <body>
     <header></header>
@@ -17,6 +20,7 @@
         <input type="date" id="saleDate" name="saleDate" required />
         <label for="clientName">Nombre del Cliente:</label>
         <input type="text" id="clientName" name="clientName" required />
+        <hr>
         <label for="saleAmount">Monto:</label>
         <input type="number" id="saleAmount" name="saleAmount" required />
         <label for="typeSale">Tipo de Venta:</label>
@@ -29,7 +33,8 @@
           <option value="carteras">Carteras</option>
           <option value="hebillas">Hebillas</option>
         </select>
-        <button id="saleSubmit">
+        <hr>
+        <button id="saleSubmit" class="btn btn-primary">
           Guardar
         </button>
       </form>
