@@ -7,6 +7,7 @@ import {
   getDocs,
   getDoc,
   deleteDoc,
+  updateDoc,
   onSnapshot,
   doc,
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
@@ -64,4 +65,8 @@ export const getThisSale = async (id) => {
     console.log('No existe el documento.');
     return null;
   }
+};
+
+export const updateSale = (id, newFields) => {
+  updateDoc(doc(db, 'ventas', id), newFields);
 };

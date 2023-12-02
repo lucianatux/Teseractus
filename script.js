@@ -1,7 +1,16 @@
-import { saveSale, getSales, onGetSales, deleteSale, getThisSale } from "./firebase.js";
+import { saveSale, 
+  getSales, 
+  onGetSales, 
+  deleteSale, 
+  getThisSale,
+  updateSale 
+} from "./firebase.js";
 
 const salesContainer = document.getElementById("salesContainer");
 const saleForm = document.getElementById("saleForm");
+
+let editStatus = false;
+let id = '';
 
 window.addEventListener("DOMContentLoaded", async () => {
   onGetSales((querySnapshot) => {
@@ -31,10 +40,19 @@ window.addEventListener("DOMContentLoaded", async () => {
     const btnsEdit = salesContainer.querySelectorAll('.btn-edit');
     btnsEdit.forEach(btn =>{
       btn.addEventListener("click", async (e) =>{
-        const doc = await getThisSale(e.target.dataset.id);
+        const sale = await getThisSale(e.target.dataset.id);
         //editSale(event.target.dataset.id);
         console.log(e.target.dataset.id);
-        console.log("doc", doc);
+        console.log(sale);
+        saleForm['saleDate'].value = sale.fecha;
+        saleForm['clientName'].value = sale.nombre;
+        saleForm['saleAmount'].value = sale.monto;
+        saleForm['typeSale'].value = sale.tipoVenta;
+
+        editStatus = true;
+        id = e.target.dataset.id;
+
+        saleForm['saleSubmit'].innerText = "Actualizar";
       })
     });
 
@@ -48,6 +66,15 @@ saleForm.addEventListener("submit", (e) => {
   const saleAmount = saleForm["saleAmount"];
   const typeSale = saleForm["typeSale"];
 
-  saveSale(saleDate.value, clientName.value, saleAmount.value, typeSale.value);
+  if(!editStatus){
+    saveSale(saleDate.value, clientName.value, saleAmount.value, typeSale.value);
+  }else{
+    console.log("editando");
+    updateSale(id, {fecha: saleDate.value, nombre: clientName.value, monto:saleAmount.value, tipoVenta:typeSale.value});
+    editStatus = false;
+    saleForm['saleSubmit'].innerText = "Guardar";
+
+  }
+  
   saleForm.reset();
 });
