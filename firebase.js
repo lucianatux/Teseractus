@@ -5,6 +5,7 @@ import {
   collection,
   addDoc,
   getDocs,
+  getDoc,
   deleteDoc,
   onSnapshot,
   doc,
@@ -31,13 +32,11 @@ const analytics = getAnalytics(app);
 const db = getFirestore();
 
 export const saveSale = (fecha, nombre, monto, tipoVenta) => {
-  console.log(fecha, nombre, monto, tipoVenta);
   addDoc(collection(db, "ventas"), { fecha, nombre, monto, tipoVenta });
 };
 
 
 export const getSales = async () => {
-    console.log("sales list");
     const querySnapshot = await getDocs(collection(db, 'ventas'));
     return querySnapshot;
 };
@@ -49,4 +48,20 @@ export const onGetSales = (callback) => {
 export const deleteSale = id => {
     deleteDoc(doc(db, 'ventas', id));
 }
+/*
+export const getThisSale = async (id) => {
+  getDoc(doc(db, 'ventas', id));
+}
+*/
+export const getThisSale = async (id) => {
+  const docRef = doc(db, 'ventas', id);
+  const docSnap = await getDoc(docRef);
 
+  if (docSnap.exists()) {
+    // El documento existe, puedes acceder a los datos con docSnap.data()
+    return docSnap.data();
+  } else {
+    console.log('No existe el documento.');
+    return null;
+  }
+};
