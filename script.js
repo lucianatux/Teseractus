@@ -9,6 +9,8 @@ import {
 
 const salesContainer = document.getElementById("salesContainer");
 const saleForm = document.getElementById("saleForm");
+const cardTitle = document.getElementById("card-title");
+const cardBody = document.querySelector(".card-body");
 
 let editStatus = false;
 let id = "";
@@ -63,10 +65,10 @@ window.addEventListener("DOMContentLoaded", async () => {
         saleForm["clientName"].value = sale.nombre;
         saleForm["saleAmount"].value = sale.monto;
         saleForm["typeSale"].value = sale.tipoVenta;
-
         editStatus = true;
         id = e.target.dataset.id;
-
+        saleForm.classList.add("editing");
+        cardTitle.innerText= "Actualizar Venta";
         saleForm["saleSubmit"].innerText = "Actualizar";
       });
     });
@@ -96,6 +98,8 @@ saleForm.addEventListener("submit", (e) => {
       tipoVenta: typeSale.value,
     });
     editStatus = false;
+    saleForm.classList.remove("editing");
+    cardTitle.innerText= "Añadir Venta";
     saleForm["saleSubmit"].innerText = "Guardar";
   }
 

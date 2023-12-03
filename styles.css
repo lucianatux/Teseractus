@@ -8,7 +8,7 @@ form{
     padding: 5px;
     border-radius: 10px;
     border: 1px solid white;
-    background-color: rgb(215, 186, 196);
+    background-color: #d7bac4;
 }
 
 select, input{
@@ -25,4 +25,7 @@ header{
 .teseractoIcon{
     width:80px;
     margin: 0 10px;
+}
+.editing{
+    background-color:  #d1c8de ;
 }
