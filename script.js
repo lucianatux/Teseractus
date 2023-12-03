@@ -1,16 +1,17 @@
-import { saveSale, 
-  getSales, 
-  onGetSales, 
-  deleteSale, 
+import {
+  saveSale,
+  getSales,
+  onGetSales,
+  deleteSale,
   getThisSale,
-  updateSale 
+  updateSale,
 } from "./firebase.js";
 
 const salesContainer = document.getElementById("salesContainer");
 const saleForm = document.getElementById("saleForm");
 
 let editStatus = false;
-let id = '';
+let id = "";
 
 window.addEventListener("DOMContentLoaded", async () => {
   onGetSales((querySnapshot) => {
@@ -19,43 +20,56 @@ window.addEventListener("DOMContentLoaded", async () => {
     querySnapshot.forEach((doc) => {
       const sale = doc.data();
       html += `
-        <div>
-            <p>${sale.fecha}</p>
-            <p>${sale.nombre}</p>
-            <p>${sale.monto}</p>
-            <p>${sale.tipoVenta}</p>
-            <button class="btn-delete" data-id="${doc.id}"  >Delete</button>
-            <button class="btn-edit" data-id="${doc.id}"  >Edit</button>
-        </div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Monto</th>
+            <th scope="col">TipoVenta</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-light">
+            <td>${sale.fecha}</td>
+            <td>${sale.nombre}</td>
+            <td>${sale.monto}</td>
+            <td>${sale.tipoVenta}</td>
+            <td><button class="btn btn-secondary btn-delete" data-id="${doc.id}">Borrar</button></td>
+            <td><button class="btn btn-info btn-edit" data-id="${doc.id}">Editar</button></td>
+          </tr>
+        </tbody>
+        </table> 
         `;
     });
     salesContainer.innerHTML = html;
-    const btnsDelete = salesContainer.querySelectorAll('.btn-delete');
-    btnsDelete.forEach(btn =>{
-        btn.addEventListener("click", (event) =>{
-            deleteSale(event.target.dataset.id);
-        })
+    const btnsDelete = salesContainer.querySelectorAll(".btn-delete");
+    btnsDelete.forEach((btn) => {
+      btn.addEventListener("click", (event) => {
+        deleteSale(event.target.dataset.id);
+      });
     });
 
-    const btnsEdit = salesContainer.querySelectorAll('.btn-edit');
-    btnsEdit.forEach(btn =>{
-      btn.addEventListener("click", async (e) =>{
+    const btnsEdit = salesContainer.querySelectorAll(".btn-edit");
+    btnsEdit.forEach((btn) => {
+      btn.addEventListener("click", async (e) => {
         const sale = await getThisSale(e.target.dataset.id);
         //editSale(event.target.dataset.id);
         console.log(e.target.dataset.id);
         console.log(sale);
-        saleForm['saleDate'].value = sale.fecha;
-        saleForm['clientName'].value = sale.nombre;
-        saleForm['saleAmount'].value = sale.monto;
-        saleForm['typeSale'].value = sale.tipoVenta;
+        saleForm["saleDate"].value = sale.fecha;
+        saleForm["clientName"].value = sale.nombre;
+        saleForm["saleAmount"].value = sale.monto;
+        saleForm["typeSale"].value = sale.tipoVenta;
 
         editStatus = true;
         id = e.target.dataset.id;
 
-        saleForm['saleSubmit'].innerText = "Actualizar";
-      })
+        saleForm["saleSubmit"].innerText = "Actualizar";
+      });
     });
-
   });
 });
 
@@ -66,15 +80,24 @@ saleForm.addEventListener("submit", (e) => {
   const saleAmount = saleForm["saleAmount"];
   const typeSale = saleForm["typeSale"];
 
-  if(!editStatus){
-    saveSale(saleDate.value, clientName.value, saleAmount.value, typeSale.value);
-  }else{
+  if (!editStatus) {
+    saveSale(
+      saleDate.value,
+      clientName.value,
+      saleAmount.value,
+      typeSale.value
+    );
+  } else {
     console.log("editando");
-    updateSale(id, {fecha: saleDate.value, nombre: clientName.value, monto:saleAmount.value, tipoVenta:typeSale.value});
+    updateSale(id, {
+      fecha: saleDate.value,
+      nombre: clientName.value,
+      monto: saleAmount.value,
+      tipoVenta: typeSale.value,
+    });
     editStatus = false;
-    saleForm['saleSubmit'].innerText = "Guardar";
-
+    saleForm["saleSubmit"].innerText = "Guardar";
   }
-  
+
   saleForm.reset();
 });

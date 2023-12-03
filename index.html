@@ -4,47 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Teseractus</title>
-    <link rel="shortcut icon" href="teseractusIcon.jpg" type="image/x-icon">
-    <link rel="stylesheet" href="https://bootswatch.com/5/minty/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
-
-
+    <link rel="shortcut icon" href="teseractusIcon.jpg" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/5/minty/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header></header>
-    <h2>Teseractus</h2>
-    <div>
-      <!-- Ejemplo de formulario -->
-      <form id="saleForm">
-        <label for="saleDate">Fecha:</label>
-        <input type="date" id="saleDate" name="saleDate" required />
-        <label for="clientName">Nombre del Cliente:</label>
-        <input type="text" id="clientName" name="clientName" required />
-        <hr>
-        <label for="saleAmount">Monto:</label>
-        <input type="number" id="saleAmount" name="saleAmount" required />
-        <label for="typeSale">Tipo de Venta:</label>
-        <select id="typeSale" name="typeSale" required>
-          <option value="tinturas">Tinturas</option>
-          <option value="sublimados">Sublimados</option>
-          <option value="libreria">Librería</option>
-          <option value="carpinteria">Carpintería</option>
-          <option value="cintos">Cintos</option>
-          <option value="carteras">Carteras</option>
-          <option value="hebillas">Hebillas</option>
-        </select>
-        <hr>
-        <button id="saleSubmit" class="btn btn-primary">
-          Guardar
-        </button>
-      </form>
-
-      <div id="salesContainer">
-
+    <header>
+      <h2>Teseractus</h2>
+      <img class="teseractoIcon" src="teseractusTranspBlack.png" alt="" />
+    </header>
+    <div class="container p-2">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h4>Añadir venta</h4>
+              <form id="saleForm">
+                <label for="saleDate">Fecha:</label>
+                <input type="date" id="saleDate" name="saleDate" required />
+                <hr />
+                <label for="clientName">Cliente:</label>
+                <input type="text" id="clientName" name="clientName" required />
+                <hr />
+                <label for="saleAmount">Monto:</label>
+                <input
+                  type="number"
+                  id="saleAmount"
+                  name="saleAmount"
+                  required
+                />
+                <hr />
+                <label for="typeSale">Tipo de Venta:</label>
+                <select id="typeSale" name="typeSale" required>
+                  <option value="tinturas">Tinturas</option>
+                  <option value="sublimados">Sublimados</option>
+                  <option value="libreria">Librería</option>
+                  <option value="carpinteria">Carpintería</option>
+                  <option value="cintos">Cintos</option>
+                  <option value="carteras">Carteras</option>
+                  <option value="hebillas">Hebillas</option>
+                </select>
+                <hr />
+                <button id="saleSubmit" class="btn btn-primary">Guardar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" id="salesContainer"></div>
+      </div>
+    </div>
+    <div class="container p-2">
+      <div class="row">
+        <div class="col-md-6" id="week">Semana</div>
+        <div class="col-md-6" id="month">Mes</div>
       </div>
     </div>
 
-    
     <script type="module" src="firebase.js"></script>
 
     <script type="module" src="script.js"></script>

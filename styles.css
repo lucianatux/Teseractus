@@ -5,14 +5,24 @@ body{
 }
 
 form{
-    padding: 20px;
-    border-radius: 20px;
+    padding: 5px;
+    border-radius: 10px;
     border: 1px solid white;
     background-color: rgb(215, 186, 196);
 }
 
-input{
-    border-radius: 20px;
+select, input{
+    border-radius: 10px;
     border: 1px solid white;
-
+    padding: 5px;
+    margin: 5px;
+}
+header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.teseractoIcon{
+    width:80px;
+    margin: 0 10px;
 }
